@@ -1,6 +1,10 @@
 /* Macro checkIfExists verifies if table passed as parameter has no rows */
 /* Parameters:                                                           */
-/*   input - table name                                                  */
+/* input - table name                                                    */
+/* Output:                                                               */
+/* Global variable dsIsEmpty                                             */
+/*   dsIsEmpty = 1 input table name has no rows                          */
+/*   dsIsEmpty = 0 input table has rows                                  */
 
 %macro checkIfExists(input);
    %global dsIsEmpty;
