@@ -1,23 +1,19 @@
-/* Macro checkIfExists verifies if table passed as parameter has no rows */
+/* Macro checkIfExists verifies if table passed as parameter exists      */
 /* Parameters:                                                           */
-/* input - table name                                                    */
+/* dsn - table name                                                      */
 /* Output:                                                               */
 /* Global variable dsIsEmpty                                             */
-/*   dsIsEmpty = 1 input table name has no rows                          */
-/*   dsIsEmpty = 0 input table has rows                                  */
+/*   dsn_exists = 1 input table exists                                   */
+/*   dsn_exists = 0 input table does not exist                           */
 
-%macro checkIfExists(input);
-   %global dsIsEmpty;
-   %local nobs;
-   
-   proc sql noprint;
-      select count(*) into: nobs from &input. ;
-   quit;
-   
-   %if &nobs. eq 0 %then %do;
-     %let dsIsEmpty = 1;
+%macro checkIfExists(dsn);
+
+   %global dsn_exists nobs;
+
+   %if %sysfunc(exist(&dsn.)) %then %do;
+      %let dsn_exists = 1;
    %end;
    %else %do;
-     %let dsIsEmpty = 0;
+      %let dsn_exists = 0; 
    %end;
 %mend checkIfExists;
